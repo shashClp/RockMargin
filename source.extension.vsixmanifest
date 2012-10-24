@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="2fde119c-c777-469c-b39c-628d79ca8fd2" Version="1.0.5" Language="en-US" Publisher="Kitty" />
+    <DisplayName>RockMargin</DisplayName>
+    <Description>Reincarnation of famous RockScroll extension for Visual Studio 2012</Description>
+    <MoreInfo>http://visualstudiogallery.msdn.microsoft.com/1b0d7360-40dd-447e-8bef-90e2cf52f683</MoreInfo>
+    <License>Info\license.rtf</License>
+    <Icon>Info\icon.png</Icon>
+    <PreviewImage>Info\preview_image.png</PreviewImage>
+  </Metadata>
+  <Installation InstalledByMsi="false">
+    <InstallationTarget Version="[11.0]" Id="Microsoft.VisualStudio.IntegratedShell" />
+  </Installation>
+  <Dependencies>
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="RockOptions" Path="|RockOptions;PkgdefProjectOutputGroup|" />
+  </Assets>
+</PackageManifest>
