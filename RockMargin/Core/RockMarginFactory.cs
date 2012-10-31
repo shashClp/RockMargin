@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using System.Windows;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 using Microsoft.VisualStudio.Text.Classification;
@@ -67,9 +68,8 @@ namespace RockMargin
 			var realScrollBarMargin = container_margin.GetTextViewMargin(PredefinedMarginNames.VerticalScrollBar) as IWpfTextViewMargin;
 			if (realScrollBarMargin != null)
 			{
-				var panel = container_margin as System.Windows.Controls.Panel;
-				if (panel != null)
-					panel.Children.Remove(realScrollBarMargin as System.Windows.UIElement);
+				realScrollBarMargin.VisualElement.MinWidth = 0.0;
+				realScrollBarMargin.VisualElement.Width = 0.0;
 			}
 		}
 
