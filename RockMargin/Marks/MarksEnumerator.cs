@@ -31,11 +31,12 @@ namespace RockMargin
 				hr = tag.Tag.MarkerType.GetDefaultColors(foreground, background);
 				if (ErrorHandler.Succeeded(hr))
 				{
-					SnapshotPoint? pos = tag.Span.Start.GetPoint(tag.Span.AnchorBuffer, PositionAffinity.Successor);
+					ITextBuffer buffer = tag.Span.BufferGraph.TopBuffer;
+					SnapshotPoint? pos = tag.Span.Start.GetPoint(buffer, PositionAffinity.Successor);
 					if (pos.HasValue)
 					{
 						var text_mark = new TextMark();
-						text_mark.line = tag.Span.AnchorBuffer.CurrentSnapshot.GetLineNumberFromPosition(pos.Value.Position);
+						text_mark.line = buffer.CurrentSnapshot.GetLineNumberFromPosition(pos.Value.Position);
 						text_mark.brush = ColorExtractor.GetBrushFromIndex(background[0]);
 						return text_mark;
 					}
