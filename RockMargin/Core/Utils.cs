@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -34,6 +36,15 @@ namespace RockMargin
 			r = (byte)(argb >> 16);
 			g = (byte)(argb >> 8);
 			b = (byte)(argb);
+		}
+
+		public static string GetEmbedeedFilePath(string file)
+		{
+			string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+			var uri = new UriBuilder(codeBase);
+			string path = Uri.UnescapeDataString(uri.Path);
+			string dir = Path.GetDirectoryName(path);
+			return Path.Combine(dir, file);
 		}
 	}
 }
