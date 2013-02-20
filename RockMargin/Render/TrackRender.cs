@@ -103,8 +103,6 @@ namespace RockMargin
 
 		public void Invalidate(MarginParts parts)
 		{
-			PreInvalidate();
-
 			if (parts.HasFlag(MarginParts.Scroll))
 				InvalidateScroll();
 
@@ -129,8 +127,6 @@ namespace RockMargin
 					InvalidateText();
 				}
 			}
-
-			PostInvalidate();
 		}
 
 		public void ReloadOptions()
@@ -152,18 +148,8 @@ namespace RockMargin
 			Visuals.Add(_scrollVisual);
 			Visuals.Add(_highlightsVisual);
 			Visuals.Add(_debugVisual);
-		}
 
-		private void PreInvalidate()
-		{
-			
-		}
-
-		private void PostInvalidate()
-		{
-#if DEBUG
-			InvalidateDebug();
-#endif
+			//_textVisual.Effect = new Shader();
 		}
 
 		private void InvalidateScroll()
@@ -202,11 +188,11 @@ namespace RockMargin
 			}
 		}
 
-		private void InvalidateDebug()
+		private void InvalidateDebug(long milliseconds)
 		{
 			using (DrawingContext dc = _debugVisual.RenderOpen())
 			{
-				
+				DrawText(dc, milliseconds.ToString(), 10, 700);
 			}
 		}
 
@@ -360,6 +346,9 @@ namespace RockMargin
 			{
 				IntPtr pBackBuffer = (IntPtr)_textVisual.Dispatcher.Invoke(new Func<int, int, IntPtr>(LockBuffer), width, height);
 
+				Stopwatch stopwatch = new Stopwatch();
+				stopwatch.Start();
+
 				unsafe
 				{
 					int ptr = pBackBuffer.ToInt32();
@@ -392,6 +381,14 @@ namespace RockMargin
 
 							// assign the color data to the pixel
 							*((uint*)pPixelPointer) = color_data;
+
+							/*if (row != 0 && column != 0 && color_data != BackgroundColor)
+							{
+								pPixelPointer -= stride;
+								uint* a = (uint*)pPixelPointer;
+								if (*a == BackgroundColor)
+									*a = (color_data & 0x00ffffff) | 0x80000000;
+							}*/
 						}
 
 						if (comments_tracker != null)
@@ -400,6 +397,10 @@ namespace RockMargin
 				}
 
 				//Thread.Sleep(3000);
+
+#if DEBUG
+				_textVisual.Dispatcher.Invoke(new Action<long>(InvalidateDebug), stopwatch.ElapsedMilliseconds);
+#endif	
 
 				_textVisual.Dispatcher.Invoke(new Action<int, int, int, int>(UnlockBuffer),	width, height, dst_width, dst_height);
 			}

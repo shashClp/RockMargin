@@ -11,6 +11,7 @@
 	</Metadata>
 	<Installation InstalledByMsi="false">
 		<InstallationTarget Version="[11.0]" Id="Microsoft.VisualStudio.IntegratedShell" />
+		<InstallationTarget Version="[10.0]" Id="Microsoft.VisualStudio.IntegratedShell" />
 	</Installation>
 	<Dependencies>
 	</Dependencies>
