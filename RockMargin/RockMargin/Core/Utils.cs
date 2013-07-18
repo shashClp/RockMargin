@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Xml;
 
 namespace RockMargin
 {
@@ -45,6 +46,21 @@ namespace RockMargin
 			string path = Uri.UnescapeDataString(uri.Path);
 			string dir = Path.GetDirectoryName(path);
 			return Path.Combine(dir, file);
+		}
+
+		public static string GetVsixVersion()
+		{
+			try
+			{
+				string manifest = Utils.GetEmbedeedFilePath("extension.vsixmanifest");
+				var doc = new XmlDocument();
+				doc.Load(manifest);
+				return doc["Vsix"]["Identifier"]["Version"].InnerText;
+			}
+			catch
+			{
+				return "?.?.?";
+			}
 		}
 	}
 }
