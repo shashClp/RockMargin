@@ -64,8 +64,15 @@ namespace RockMargin
 		public MarksEnumerator(IViewTagAggregatorFactoryService aggregator_factory, ITextView view)
 		{
 			_view = view;
+			_view.Closed += OnViewClosed;
+
 			_aggregator = aggregator_factory.CreateTagAggregator<IVsVisibleTextMarkerTag>(view);
 			_aggregator.BatchedTagsChanged += OnTagsChanged;
+		}
+
+		void OnViewClosed(object sender, EventArgs e)
+		{
+			_aggregator.BatchedTagsChanged -= OnTagsChanged;
 		}
 
 		private void OnTagsChanged(object source, BatchedTagsChangedEventArgs e)
@@ -88,5 +95,5 @@ namespace RockMargin
 
 			MarksChanged(this, EventArgs.Empty);
 		}
+		}
 	}
-}

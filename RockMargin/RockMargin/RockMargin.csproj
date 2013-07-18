@@ -102,9 +102,11 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\MonitoringService.cs" />
     <Compile Include="Core\Utils.cs" />
     <Compile Include="Marks\ColorExtractor.cs" />
     <Compile Include="Options\OptionsDefinition.cs" />
