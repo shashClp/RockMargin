@@ -12,6 +12,8 @@ namespace RockMargin
 {
 	static class Utils
 	{
+		public static string VSVersion = "?";
+
 		public static Color CreateColor(uint argb)
 		{
 			byte a, r, g, b;
