@@ -12,6 +12,7 @@ using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Windows.Media;
+using System.Reflection;
 
 
 namespace RockMargin
@@ -50,6 +51,12 @@ namespace RockMargin
 		{
 			IWpfTextView text_view = view_host.TextView;
 
+			try
+			{
+				Utils.VSVersion = Assembly.GetCallingAssembly().GetName().Version.Major.ToString();
+			}
+			catch { }
+			
 			if (!PresenceSent)
 			{
 				PresenceSent = true;
