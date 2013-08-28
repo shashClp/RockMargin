@@ -149,7 +149,8 @@ namespace HTTPServer
 					</head>
 
 					<body>
-							<b>Unique users:</b> {1}<br><br>
+							<b>Unique users:</b> {1}<br>
+							<b>Unique cities:</b> {2}<br><br>
 							<div id='map_canvas'></div>
 					</body>
 				</html>";
@@ -162,6 +163,7 @@ namespace HTTPServer
 			content = content.Replace("{0}", cities_array);
 
 			content = content.Replace("{1}", ips.Count.ToString());
+			content = content.Replace("{2}", cities.Count.ToString());
 
 			CreateHTMLPage(context.Response, content, "text/html");
 		}
