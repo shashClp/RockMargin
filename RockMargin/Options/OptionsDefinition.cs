@@ -16,6 +16,13 @@ namespace RockMargin
 	}
 
 	[Export(typeof(EditorOptionDefinition))]
+	public sealed class AltHighlightsOption : ViewOptionDefinition<bool>
+	{
+		public override bool Default { get { return false; } }
+		public override EditorOptionKey<bool> Key { get { return OptionsKeys.AltHighlights; } }
+	}
+
+	[Export(typeof(EditorOptionDefinition))]
 	public sealed class HighlightsEnabledOption : ViewOptionDefinition<bool>
 	{
 		public override bool Default { get { return true; } }

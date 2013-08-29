@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Windows.Media;
 using System.Reflection;
+using System.Windows.Input;
 
 
 namespace RockMargin
@@ -50,7 +51,7 @@ namespace RockMargin
 		public IWpfTextViewMargin CreateMargin(IWpfTextViewHost view_host, IWpfTextViewMargin container_margin)
 		{
 			IWpfTextView text_view = view_host.TextView;
-
+			
 			try
 			{
 				Utils.VSVersion = Assembly.GetCallingAssembly().GetName().Version.Major.ToString();
