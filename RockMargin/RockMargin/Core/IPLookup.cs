@@ -18,6 +18,7 @@ namespace RockMargin
 		public IPLookup()
 		{
 			var web_client = new WebClient();
+			web_client.Encoding = Encoding.UTF7;
 			string data = web_client.DownloadString(LOOKUP_SERVER);
 
 			IPAddress = FindInfo(data, @">IP Address: .*?>(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)");
