@@ -81,9 +81,24 @@ namespace RockMargin
 			SynchronousUpdate(_point, new NormalizedSnapshotSpanCollection(), null);
 		}
 
+		private bool Enabled
+		{
+			get { return _view.Options.GetOptionValue(OptionsKeys.HighlightsEnabled);  }
+		}
+
+		private bool Active
+		{
+			get
+			{
+				return Keyboard.IsKeyDown(Key.LeftAlt) ||
+					Keyboard.IsKeyDown(Key.RightAlt) ||
+					!_view.Options.GetOptionValue(OptionsKeys.AltHighlights);
+			}
+		}
+
 		void ViewMouseLeftButtonDown(object sender, RoutedEventArgs routed_e)
 		{
-			if (_view.Options.GetOptionValue(OptionsKeys.HighlightsEnabled))
+			if (Enabled && Active)
 			{
 				var e = routed_e as MouseButtonEventArgs;
 				switch (e.ClickCount)

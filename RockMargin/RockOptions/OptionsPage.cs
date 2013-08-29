@@ -72,6 +72,14 @@ namespace RockMargin
 		}
 
 		[Category(HighlightsCategoryName)]
+		[DisplayName("Alt + Double click")]
+		public bool AltHighlights
+		{
+			get { return GetOption(OptionsKeys.AltHighlights); }
+			set { SetOption(OptionsKeys.AltHighlights, value); }
+		}
+
+		[Category(HighlightsCategoryName)]
 		[DisplayName("Enabled")]
 		public bool HighlightsEnabled
 		{
