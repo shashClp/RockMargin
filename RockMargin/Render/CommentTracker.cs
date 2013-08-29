@@ -116,7 +116,7 @@ namespace RockMargin
 
 		static private bool EndsWith(string s, int index, string value)
 		{
-			if (index - value.Length < 0)
+			if (index + 1 - value.Length < 0)
 				return false;
 
 			for (int i = 0; i < value.Length; ++i)
