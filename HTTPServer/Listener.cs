@@ -109,12 +109,18 @@ namespace HTTPServer
 		{
 			var ips = new HashSet<string>();
 			var cities = new HashSet<string>();
+			uint vs_10 = 0;
 			foreach (var entry in _storage.PresenceReports)
 			{
 				string user_hash = entry.user.IPAddress + entry.user.MachineName;
 
 				if (!ips.Contains(user_hash))
+				{
 					ips.Add(user_hash);
+
+					if (entry.user.VSVersion == "10")
+						vs_10++;
+				}
 
 				if (!cities.Contains(entry.user.City))
 					cities.Add(entry.user.City);
@@ -150,7 +156,8 @@ namespace HTTPServer
 
 					<body>
 							<b>Unique users:</b> {1}<br>
-							<b>Unique cities:</b> {2}<br><br>
+							<b>Unique cities:</b> {2}<br>
+							<b>VS 10:</b> {3}%<br><br>
 							<div id='map_canvas'></div>
 					</body>
 				</html>";
@@ -164,6 +171,7 @@ namespace HTTPServer
 
 			content = content.Replace("{1}", ips.Count.ToString());
 			content = content.Replace("{2}", cities.Count.ToString());
+			content = content.Replace("{3}", (100.0f * vs_10/ips.Count).ToString());
 
 			CreateHTMLPage(context.Response, content, "text/html");
 		}
