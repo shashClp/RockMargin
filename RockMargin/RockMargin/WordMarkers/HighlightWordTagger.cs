@@ -46,6 +46,8 @@ namespace RockMargin
 			_format = format;
 
 			view.VisualElement.AddHandler(FrameworkElement.MouseLeftButtonDownEvent, new RoutedEventHandler(ViewMouseLeftButtonDown), true);
+			view.VisualElement.AddHandler(FrameworkElement.KeyUpEvent, new RoutedEventHandler(ViewKeyUp), true);
+			
 			view.Closed += OnViewClosed;
 			view.Options.OptionChanged += OnOptionChanged;
 		}
@@ -93,6 +95,15 @@ namespace RockMargin
 				return Keyboard.IsKeyDown(Key.LeftAlt) ||
 					Keyboard.IsKeyDown(Key.RightAlt) ||
 					!_view.Options.GetOptionValue(OptionsKeys.AltHighlights);
+			}
+		}
+
+		void ViewKeyUp(object sender, RoutedEventArgs routed_e)
+		{
+			var e = routed_e as KeyEventArgs;
+			if (e.Key == Key.Escape)
+			{
+				Clear();
 			}
 		}
 
