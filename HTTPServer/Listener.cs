@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HTTPServer
@@ -36,26 +39,31 @@ namespace HTTPServer
 			_listener.Start();
 			Console.WriteLine("Listening...");
 
+			var regex = new Regex("http://.+/(.+)/", RegexOptions.Compiled);
+
 			while (true)
 			{
 				HttpListenerContext context = _listener.GetContext();
 
 				string request_url = context.Request.Url.AbsoluteUri;
-				Action<HttpListenerContext> action = null;
-				if (_callbacks.TryGetValue(request_url, out action))
-					action(context);
+
+				var match = regex.Match(request_url);
+				if (match.Success)
+				{
+					string action_id = match.Groups[1].Value;
+
+					Action<HttpListenerContext> action = null;
+					if (_callbacks.TryGetValue(action_id, out action))
+						action(context);
+				}
 			}
 		}
 
 		private void RegisterPage(string page, Action<HttpListenerContext> callback)
 		{
-			string address = string.Format("http://{0}/{1}/", "92.249.114.70", page);
+			string address = string.Format("http://*/{0}/", page);
 			_listener.Prefixes.Add(address);
-			_callbacks.Add(address, callback);
-
-			address = string.Format("http://{0}/{1}/", "localhost", page);
-			_listener.Prefixes.Add(address);
-			_callbacks.Add(address, callback);
+			_callbacks.Add(page, callback);
 		}
 
 		private void ProcessCrashRequest(HttpListenerContext context)

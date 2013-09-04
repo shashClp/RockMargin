@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,14 +31,15 @@ namespace HTTPServer
 			public void Serialize(XmlElement node)
 			{
 				user.SerializeToXml(node);
-				node.SetAttribute("date", date.ToString());
+				node.SetAttribute("date", date.ToString("dd.MM.yyyy H:mm:ss"));
 			}
 
 			public static Entry Deserialize(XmlElement node)
 			{
+				string s = node.GetAttribute("date");
 				return new Entry {
 					user = new UserInfo(node),
-					date = DateTime.Parse(node.GetAttribute("date"))
+					date = DateTime.ParseExact(node.GetAttribute("date"), "dd.MM.yyyy H:mm:ss", CultureInfo.InvariantCulture)
 				};
 			}
 		}
