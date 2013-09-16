@@ -23,5 +23,9 @@ namespace RockMargin
 
 		public static readonly EditorOptionKey<uint> TextMarkerBackgroundColor = new EditorOptionKey<uint>("RockMargin/TextMarkerBackgroundColor");
 		public static readonly EditorOptionKey<uint> TextMarkerForegroundColor = new EditorOptionKey<uint>("RockMargin/TextMarkerForegroundColor");
+
+		public static readonly EditorOptionKey<bool> ChangeMarginEnabled = new EditorOptionKey<bool>("RockMargin/ChangeMarginEnabled");
+		public static readonly EditorOptionKey<uint> SavedChangeColor = new EditorOptionKey<uint>("RockMargin/SavedChangeColor");
+		public static readonly EditorOptionKey<uint> UnsavedChangeColor = new EditorOptionKey<uint>("RockMargin/UnsavedChangeColor");
 	}
 }

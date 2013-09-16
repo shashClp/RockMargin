@@ -73,9 +73,10 @@ namespace RockMargin
 			var format = FormatMapService.GetEditorFormatMap(text_view);
 			var tagger = HighlightWordTagger.Instance(text_view, format, TextSearchService, navigator);
 			var marks_enumerator = new MarksEnumerator(AggregatorFactoryService, text_view);
+			var change_enumerator = new ChangeEnumerator(AggregatorFactoryService, text_view);
 			var words_enumerator = new HighlightedWordsEnumerator(text_view, tagger);
 
-			return new RockMargin(text_view, marks_enumerator, words_enumerator, tagger);
+			return new RockMargin(text_view, marks_enumerator, change_enumerator, words_enumerator, tagger);
 		}
 
 		private void RemoveVerticalScrollBar(IWpfTextViewMargin container_margin)

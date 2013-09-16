@@ -18,21 +18,28 @@ namespace RockMargin
 
 		IWpfTextView _view;
 		MarksEnumerator _marks;
+		ChangeEnumerator _changes;
 		HighlightedWordsEnumerator _highlights;
 		HighlightWordTagger _tagger;
 		Track _track;
 		TrackRender _render;
 
 
-		public RockMargin(IWpfTextView view, MarksEnumerator marks, HighlightedWordsEnumerator highlights, HighlightWordTagger tagger)
+		public RockMargin(
+			IWpfTextView view,
+			MarksEnumerator marks,
+			ChangeEnumerator changes,
+			HighlightedWordsEnumerator highlights,
+			HighlightWordTagger tagger)
 		{
 			_view = view;
 			_marks = marks;
+			_changes = changes;
 			_highlights = highlights;
 			_tagger = tagger;
 
 			_track = new Track(view, this);
-			_render = new TrackRender(view, _track, _marks, _highlights);
+			_render = new TrackRender(_view, _track, _marks, _changes, _highlights);
 
 			this.Width = _view.Options.GetOptionValue(OptionsKeys.Width);
 			this.ClipToBounds = true;
@@ -43,6 +50,7 @@ namespace RockMargin
 			view.ZoomLevelChanged += OnViewStateChanged;
 			highlights.WordsChanged += OnWordHighlightsChanged;
 			marks.MarksChanged += OnMarksChanged;
+			changes.ChangesChanged += OnChangesChanged;
 
 			this.SizeChanged += OnViewStateChanged;
 			this.MouseRightButtonDown += this.OnMouseRightButtonDown;
@@ -101,6 +109,15 @@ namespace RockMargin
 				_render.ReloadOptions();
 				_render.Invalidate(TrackRender.MarginParts.WordHighlights);
 			}
+			else if (e.OptionId == OptionsKeys.SavedChangeColor.Name || e.OptionId == OptionsKeys.UnsavedChangeColor.Name)
+			{
+				_render.ReloadOptions();
+				_render.Invalidate(TrackRender.MarginParts.Changes);
+			}
+			else if (e.OptionId == OptionsKeys.ChangeMarginEnabled.Name)
+			{
+				_render.Invalidate(TrackRender.MarginParts.Changes | TrackRender.MarginParts.Text);
+			}
 		}
 
 		private void OnWordHighlightsChanged(object source, EventArgs e)
@@ -113,16 +130,23 @@ namespace RockMargin
 			_render.Invalidate(TrackRender.MarginParts.Marks);
 		}
 
+		private void OnChangesChanged(object sender, EventArgs e)
+		{
+			_render.Invalidate(TrackRender.MarginParts.Changes);
+		}
+
 		private void OnTextViewLayoutChanged(object source, TextViewLayoutChangedEventArgs e)
 		{
 			if (e.NewViewState.EditSnapshot != e.OldViewState.EditSnapshot)
 			{
 				_marks.UpdateMarks();
+				_changes.UpdateChanges();
 				_render.Invalidate(TrackRender.MarginParts.All | TrackRender.MarginParts.Batched);
 			}
 			else if (e.NewViewState.VisualSnapshot != e.OldViewState.VisualSnapshot)
 			{
 				_marks.UpdateMarks();
+				_changes.UpdateChanges();
 				_render.Invalidate(TrackRender.MarginParts.All);
 			}
 			else

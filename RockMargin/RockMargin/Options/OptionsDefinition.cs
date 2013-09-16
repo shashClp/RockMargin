@@ -91,4 +91,25 @@ namespace RockMargin
 		public override uint Default { get { return 0xff00008b; } }
 		public override EditorOptionKey<uint> Key { get { return OptionsKeys.TextMarkerForegroundColor; } }
 	}
+
+	[Export(typeof(EditorOptionDefinition))]
+	public sealed class SavedChangeColorOption : ViewOptionDefinition<uint>
+	{
+		public override uint Default { get { return 0xff6ce26c; } }
+		public override EditorOptionKey<uint> Key { get { return OptionsKeys.SavedChangeColor; } }
+	}
+
+	[Export(typeof(EditorOptionDefinition))]
+	public sealed class UnsavedChangeColorOption : ViewOptionDefinition<uint>
+	{
+		public override uint Default { get { return 0xffffee62; } }
+		public override EditorOptionKey<uint> Key { get { return OptionsKeys.UnsavedChangeColor; } }
+	}
+
+	[Export(typeof(EditorOptionDefinition))]
+	public sealed class ChangeMarginEnabledOption : ViewOptionDefinition<bool>
+	{
+		public override bool Default { get { return true; } }
+		public override EditorOptionKey<bool> Key { get { return OptionsKeys.ChangeMarginEnabled; } }
+	}
 }

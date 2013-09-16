@@ -93,7 +93,8 @@ namespace RockMargin
 					_marks.Add(mark);
 			}
 
-			MarksChanged(this, EventArgs.Empty);
-		}
+			if (MarksChanged != null)
+				MarksChanged(this, EventArgs.Empty);
 		}
 	}
+}

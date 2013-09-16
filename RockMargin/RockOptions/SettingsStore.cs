@@ -28,6 +28,9 @@ namespace RockMargin
 			LoadOption(OptionsKeys.BackgroundColor);
 			LoadOption(OptionsKeys.TextMarkerBackgroundColor);
 			LoadOption(OptionsKeys.TextMarkerForegroundColor);
+			LoadOption(OptionsKeys.ChangeMarginEnabled);
+			LoadOption(OptionsKeys.SavedChangeColor);
+			LoadOption(OptionsKeys.UnsavedChangeColor);
 		}
 
 		public void Save()
@@ -43,6 +46,9 @@ namespace RockMargin
 			SaveOption(OptionsKeys.BackgroundColor);
 			SaveOption(OptionsKeys.TextMarkerBackgroundColor);
 			SaveOption(OptionsKeys.TextMarkerForegroundColor);
+			SaveOption(OptionsKeys.ChangeMarginEnabled);
+			SaveOption(OptionsKeys.SavedChangeColor);
+			SaveOption(OptionsKeys.UnsavedChangeColor);
 		}
 
 		private string GetCollectionName(string name)
