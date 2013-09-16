@@ -11,6 +11,7 @@ namespace RockMargin
 		const string GeneralCategoryName = "General";
 		const string ScrollCategoryName = "Scroll coloring";
 		const string HighlightsCategoryName = "Text markers";
+		const string ChangesCategoryName = "Change margin";
 
 		public static IEditorOptionsFactoryService OptionsService;
 		public static IVsSettingsManager SettingsManager;
@@ -101,6 +102,30 @@ namespace RockMargin
 		{
 			get { return FromArgb(GetOption(OptionsKeys.TextMarkerForegroundColor)); }
 			set { SetOption(OptionsKeys.TextMarkerForegroundColor, ToArgb(value)); }
+		}
+
+		[Category(ChangesCategoryName)]
+		[DisplayName("Enabled")]
+		public bool ChangeMarginEnabled
+		{
+			get { return GetOption(OptionsKeys.ChangeMarginEnabled); }
+			set { SetOption(OptionsKeys.ChangeMarginEnabled, value); }
+		}
+
+		[Category(ChangesCategoryName)]
+		[DisplayName("Saved change color")]
+		public Color SavedChangeColor
+		{
+			get { return FromArgb(GetOption(OptionsKeys.SavedChangeColor)); }
+			set { SetOption(OptionsKeys.SavedChangeColor, ToArgb(value)); }
+		}
+
+		[Category(ChangesCategoryName)]
+		[DisplayName("Unsaved change color")]
+		public Color UnsavedChangeColor
+		{
+			get { return FromArgb(GetOption(OptionsKeys.UnsavedChangeColor)); }
+			set { SetOption(OptionsKeys.UnsavedChangeColor, ToArgb(value)); }
 		}
 
 

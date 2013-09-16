@@ -20,21 +20,25 @@ namespace RockMargin
 		[Flags]
 		public enum MarginParts
 		{
-			Scroll = 1,
-			Marks = 2,
-			WordHighlights = 4,
-			Text = 8,
-			All = Scroll | Marks | WordHighlights | Text,
+			Scroll = 1 << 0,
+			Marks = 1 << 1,
+			WordHighlights = 1 << 2,
+			Text = 1 << 3,
+			Changes = 1 << 4,
+			All = Scroll | Marks | WordHighlights | Text | Changes,
 
 			Batched = 128
 		}
 
 		const double MarksMarginWidth = 4;
+		const double ChangesMarginWidth = 2;
 
 		private Brush MarginBrush;
 		private Brush ScrollBrush;
 		private Brush ThumbBrush;
 		private Brush HighlightBrush;
+		private Brush SavedChangesBrush;
+		private Brush UnsavedChangesBrush;
 		private uint TextColor;
 		private uint CommentsColor;
 		private uint BackgroundColor;
@@ -42,11 +46,13 @@ namespace RockMargin
 		readonly IWpfTextView _view;
 		readonly Track _track;
 		readonly MarksEnumerator _marks;
+		readonly ChangeEnumerator _changes;
 		readonly HighlightedWordsEnumerator _highlights;
 
 		public List<Visual> Visuals { get; private set; }
 		private DrawingVisual _textVisual = new DrawingVisual();
 		private DrawingVisual _marksVisual = new DrawingVisual();
+		private DrawingVisual _changesVisual = new DrawingVisual();
 		private DrawingVisual _scrollVisual = new DrawingVisual();
 		private DrawingVisual _highlightsVisual = new DrawingVisual();
 		private DrawingVisual _debugVisual = new DrawingVisual();
@@ -59,6 +65,14 @@ namespace RockMargin
 		private Thread _thread = null;
 		private bool _invalidateText = false;
 
+		double TextOffset
+		{
+			get
+			{
+				bool changes_enabled = _view.Options.GetOptionValue(OptionsKeys.ChangeMarginEnabled);
+				return changes_enabled ? MarksMarginWidth + ChangesMarginWidth : MarksMarginWidth;
+			}
+		}
 
 		Rect MarksMarginRectangle
 		{
@@ -67,25 +81,26 @@ namespace RockMargin
 
 		Rect TopRectangle
 		{
-			get { return new Rect(MarksMarginWidth, 0, _track.CanvasWidth, _track.ThumbTop); }
+			get { return new Rect(TextOffset, 0, _track.CanvasWidth, _track.ThumbTop); }
 		}
 
 		Rect MiddleRectangle
 		{
-			get { return new Rect(MarksMarginWidth, _track.ThumbTop, _track.CanvasWidth, _track.ThumbBottom - _track.ThumbTop); }
+			get { return new Rect(TextOffset, _track.ThumbTop, _track.CanvasWidth, _track.ThumbBottom - _track.ThumbTop); }
 		}
 
 		Rect BottomRectangle
 		{
-			get { return new Rect(MarksMarginWidth, _track.ThumbBottom, _track.CanvasWidth, _track.CanvasHeight - _track.ThumbBottom); }
+			get { return new Rect(TextOffset, _track.ThumbBottom, _track.CanvasWidth, _track.CanvasHeight - _track.ThumbBottom); }
 		}
 
 
-		public TrackRender(IWpfTextView view, Track track, MarksEnumerator marks, HighlightedWordsEnumerator highlights)
+		public TrackRender(IWpfTextView view, Track track, MarksEnumerator marks, ChangeEnumerator changes, HighlightedWordsEnumerator highlights)
 		{
 			_view = view;
 			_track = track;
 			_marks = marks;
+			_changes = changes;
 			_highlights = highlights;
 
 			_timer = new DispatcherTimer();
@@ -108,6 +123,9 @@ namespace RockMargin
 
 			if (parts.HasFlag(MarginParts.Marks))
 				InvalidateMarks();
+
+			if (parts.HasFlag(MarginParts.Changes))
+				InvalidateChanges();
 
 			if (parts.HasFlag(MarginParts.WordHighlights))
 				InvalidateHighlights();
@@ -138,6 +156,8 @@ namespace RockMargin
 			TextColor = _view.Options.GetOptionValue(OptionsKeys.TextColor);
 			CommentsColor = _view.Options.GetOptionValue(OptionsKeys.CommentsColor);
 			BackgroundColor = _view.Options.GetOptionValue(OptionsKeys.BackgroundColor);
+			SavedChangesBrush = Utils.CreateBrush(_view.Options.GetOptionValue(OptionsKeys.SavedChangeColor));
+			UnsavedChangesBrush = Utils.CreateBrush(_view.Options.GetOptionValue(OptionsKeys.UnsavedChangeColor));
 		}
 
 		private void InitDrawingObjects()
@@ -145,6 +165,7 @@ namespace RockMargin
 			Visuals = new List<Visual>();
 			Visuals.Add(_textVisual);
 			Visuals.Add(_marksVisual);
+			Visuals.Add(_changesVisual);
 			Visuals.Add(_scrollVisual);
 			Visuals.Add(_highlightsVisual);
 			Visuals.Add(_debugVisual);
@@ -175,6 +196,26 @@ namespace RockMargin
 			}
 		}
 
+		private void InvalidateChanges()
+		{
+			using (DrawingContext dc = _changesVisual.RenderOpen())
+			{
+				bool enabled = _view.Options.GetOptionValue(OptionsKeys.ChangeMarginEnabled);
+				if (enabled)
+				{
+					var rect = new Rect(MarksMarginWidth, 0, ChangesMarginWidth, 0);
+					foreach (var change in _changes.Changes)
+					{
+						rect.Y = _track.GetPositionFromLine(change.start_line);
+						rect.Height = _track.GetPositionFromLine(change.end_line) - rect.Y + 1;
+
+						var brush = change.saved ? SavedChangesBrush : UnsavedChangesBrush;
+						dc.DrawRectangle(brush, null, rect);
+					}
+				}
+			}
+		}
+
 		private void InvalidateHighlights()
 		{
 			using (DrawingContext dc = _highlightsVisual.RenderOpen())
@@ -200,7 +241,7 @@ namespace RockMargin
 		{
 			ITextSnapshotLine line = _view.VisualSnapshot.GetLineFromPosition(span.Start);
 
-			double x = MarksMarginWidth + (span.Start - line.Start.Position);
+			double x = TextOffset + (span.Start - line.Start.Position);
 			double y = Math.Floor(_track.GetPositionFromLine(line.LineNumber) + 0.5);
 			double w = (span.Length);
 			double h = 2.0;
@@ -316,7 +357,7 @@ namespace RockMargin
 
 				using (DrawingContext dc = _textVisual.RenderOpen())
 				{
-					dc.DrawImage(bmp, new Rect(MarksMarginWidth, 0, bmp.Width, bmp.Height));
+					dc.DrawImage(bmp, new Rect(TextOffset, 0, bmp.Width, bmp.Height));
 				}
 			}
 
@@ -336,7 +377,7 @@ namespace RockMargin
 			var lines = new List<ITextSnapshotLine>(_view.VisualSnapshot.Lines);
 			var comments_tracker = CommentsTracker.Create(_view.TextBuffer.ContentType.TypeName);
 
-			int width = (int)(_track.CanvasWidth - MarksMarginWidth);
+			int width = (int)(_track.CanvasWidth - TextOffset);
 			int height = lines.Count;
 
 			int dst_width = width;
