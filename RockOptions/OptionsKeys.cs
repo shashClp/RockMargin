@@ -10,6 +10,7 @@ namespace RockMargin
 	public static class OptionsKeys
 	{
 		public static readonly EditorOptionKey<uint> Width = new EditorOptionKey<uint>("RockMargin/Width");
+		public static readonly EditorOptionKey<bool> EnhancedTextRendering = new EditorOptionKey<bool>("RockMargin/EnhancedTextRendering");
 
 		public static readonly EditorOptionKey<bool> AltHighlights = new EditorOptionKey<bool>("RockMargin/AltHighlights");
 		public static readonly EditorOptionKey<bool> HighlightsEnabled = new EditorOptionKey<bool>("RockMargin/HighlightsEnabled");

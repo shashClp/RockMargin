@@ -112,4 +112,11 @@ namespace RockMargin
 		public override bool Default { get { return true; } }
 		public override EditorOptionKey<bool> Key { get { return OptionsKeys.ChangeMarginEnabled; } }
 	}
+
+	[Export(typeof(EditorOptionDefinition))]
+	public sealed class EnhancedTextRenderingOption : ViewOptionDefinition<bool>
+	{
+		public override bool Default { get { return true; } }
+		public override EditorOptionKey<bool> Key { get { return OptionsKeys.EnhancedTextRendering; } }
+	}
 }

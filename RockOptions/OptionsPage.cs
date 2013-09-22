@@ -128,6 +128,14 @@ namespace RockMargin
 			set { SetOption(OptionsKeys.UnsavedChangeColor, ToArgb(value)); }
 		}
 
+		[Category(GeneralCategoryName)]
+		[DisplayName("Enhanced text rendering")]
+		public bool EnhancedTextRendering
+		{
+			get { return GetOption(OptionsKeys.EnhancedTextRendering); }
+			set { SetOption(OptionsKeys.EnhancedTextRendering, value); }
+		}
+
 
 		private Color FromArgb(uint argb)
 		{

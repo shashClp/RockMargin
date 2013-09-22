@@ -3,7 +3,7 @@
   <Identifier Id="2fde119c-c777-469c-b39c-628d79ca8fd2">
     <Name>RockMargin</Name>
     <Author>Kitty</Author>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <Description xml:space="preserve">Reincarnation of famous RockScroll extension for Visual Studio 2010/2012/2013</Description>
     <Locale>1033</Locale>
     <MoreInfoUrl>http://visualstudiogallery.msdn.microsoft.com/1b0d7360-40dd-447e-8bef-90e2cf52f683</MoreInfoUrl>

@@ -118,6 +118,10 @@ namespace RockMargin
 			{
 				_render.Invalidate(TrackRender.MarginParts.Changes | TrackRender.MarginParts.Text);
 			}
+			else if (e.OptionId == OptionsKeys.EnhancedTextRendering.Name)
+			{
+				_render.Invalidate(TrackRender.MarginParts.Text);
+			}
 		}
 
 		private void OnWordHighlightsChanged(object source, EventArgs e)
