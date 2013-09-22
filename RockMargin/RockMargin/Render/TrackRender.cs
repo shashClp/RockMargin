@@ -277,7 +277,7 @@ namespace RockMargin
 		private void DrawText(DrawingContext dc, string text, double x, double y)
 		{
 			FormattedText format = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
-				new Typeface("Verdana"), 14, Brushes.Red);
+				new Typeface("Consolas"), 14, Brushes.Red);
 
 			format.MaxTextWidth = 300;
 			format.MaxTextHeight = 240;
@@ -383,6 +383,8 @@ namespace RockMargin
 			int dst_width = width;
 			int dst_height = (int)Math.Min(height, _track.CanvasHeight - _track.ThumbHeight);
 
+			bool enhanced_rendering = _view.Options.GetOptionValue(OptionsKeys.EnhancedTextRendering);
+
 			lock (_lock)
 			{
 				IntPtr pBackBuffer = (IntPtr)_textVisual.Dispatcher.Invoke(new Func<int, int, IntPtr>(LockBuffer), width, height);
@@ -423,13 +425,13 @@ namespace RockMargin
 							// assign the color data to the pixel
 							*((uint*)pPixelPointer) = color_data;
 
-							/*if (row != 0 && column != 0 && color_data != BackgroundColor)
+							if (enhanced_rendering && row != 0 && column != 0 && color_data != BackgroundColor)
 							{
 								pPixelPointer -= stride;
 								uint* a = (uint*)pPixelPointer;
 								if (*a == BackgroundColor)
 									*a = (color_data & 0x00ffffff) | 0x80000000;
-							}*/
+							}
 						}
 
 						if (comments_tracker != null)
@@ -439,12 +441,15 @@ namespace RockMargin
 
 				//Thread.Sleep(3000);
 
-#if DEBUG
-				_textVisual.Dispatcher.Invoke(new Action<long>(InvalidateDebug), stopwatch.ElapsedMilliseconds);
-#endif	
-
+				RenderDebugInfo(stopwatch.ElapsedMilliseconds);
 				_textVisual.Dispatcher.Invoke(new Action<int, int, int, int>(UnlockBuffer),	width, height, dst_width, dst_height);
 			}
+		}
+
+		[Conditional("DEBUG")]
+		private void RenderDebugInfo(long milliseconds)
+		{
+			_textVisual.Dispatcher.Invoke(new Action<long>(InvalidateDebug), milliseconds);
 		}
 	}
 }

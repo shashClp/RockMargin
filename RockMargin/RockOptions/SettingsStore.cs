@@ -31,6 +31,7 @@ namespace RockMargin
 			LoadOption(OptionsKeys.ChangeMarginEnabled);
 			LoadOption(OptionsKeys.SavedChangeColor);
 			LoadOption(OptionsKeys.UnsavedChangeColor);
+			LoadOption(OptionsKeys.EnhancedTextRendering);
 		}
 
 		public void Save()
@@ -49,6 +50,7 @@ namespace RockMargin
 			SaveOption(OptionsKeys.ChangeMarginEnabled);
 			SaveOption(OptionsKeys.SavedChangeColor);
 			SaveOption(OptionsKeys.UnsavedChangeColor);
+			SaveOption(OptionsKeys.EnhancedTextRendering);
 		}
 
 		private string GetCollectionName(string name)
