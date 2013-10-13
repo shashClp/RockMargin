@@ -18,6 +18,7 @@ namespace RockMargin
 		public void Load()
 		{
 			LoadOption(OptionsKeys.Width);
+			LoadOption(OptionsKeys.AltHighlights);
 			LoadOption(OptionsKeys.HighlightsEnabled);
 			LoadOption(OptionsKeys.MarginColor);
 			LoadOption(OptionsKeys.ScrollColor);
@@ -37,6 +38,7 @@ namespace RockMargin
 		public void Save()
 		{
 			SaveOption(OptionsKeys.Width);
+			SaveOption(OptionsKeys.AltHighlights);
 			SaveOption(OptionsKeys.HighlightsEnabled);
 			SaveOption(OptionsKeys.MarginColor);
 			SaveOption(OptionsKeys.ScrollColor);
