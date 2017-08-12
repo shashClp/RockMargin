@@ -9,7 +9,7 @@ namespace RockMargin
 	public class OptionsPage : DialogPage
 	{
 		const string GeneralCategoryName = "General";
-		const string ScrollCategoryName = "Scroll coloring";
+		const string ScrollCategoryName = "Scroll coloring"	;
 		const string HighlightsCategoryName = "Text markers";
 		const string ChangesCategoryName = "Change margin";
 
