@@ -23,6 +23,9 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
