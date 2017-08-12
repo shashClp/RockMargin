@@ -81,8 +81,7 @@ namespace RockMargin
 
 		private void RemoveVerticalScrollBar(IWpfTextViewMargin container_margin)
 		{
-			var realScrollBarMargin = container_margin.GetTextViewMargin(PredefinedMarginNames.VerticalScrollBar) as IWpfTextViewMargin;
-			if (realScrollBarMargin != null)
+			if (container_margin.GetTextViewMargin(PredefinedMarginNames.VerticalScrollBar) is IWpfTextViewMargin realScrollBarMargin)
 			{
 				realScrollBarMargin.VisualElement.MinWidth = 0.0;
 				realScrollBarMargin.VisualElement.Width = 0.0;

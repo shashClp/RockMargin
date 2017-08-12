@@ -162,13 +162,15 @@ namespace RockMargin
 
 		private void InitDrawingObjects()
 		{
-			Visuals = new List<Visual>();
-			Visuals.Add(_textVisual);
-			Visuals.Add(_marksVisual);
-			Visuals.Add(_changesVisual);
-			Visuals.Add(_scrollVisual);
-			Visuals.Add(_highlightsVisual);
-			Visuals.Add(_debugVisual);
+			Visuals = new List<Visual>
+			{
+				_textVisual,
+				_marksVisual,
+				_changesVisual,
+				_scrollVisual,
+				_highlightsVisual,
+				_debugVisual
+			};
 		}
 
 		private void InvalidateScroll()
