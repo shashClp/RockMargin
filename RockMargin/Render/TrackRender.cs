@@ -169,8 +169,6 @@ namespace RockMargin
 			Visuals.Add(_scrollVisual);
 			Visuals.Add(_highlightsVisual);
 			Visuals.Add(_debugVisual);
-
-			//_textVisual.Effect = new Shader();
 		}
 
 		private void InvalidateScroll()
