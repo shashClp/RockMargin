@@ -7,6 +7,7 @@ In VS 2005/2008 days I've found the tool that makes code navigation easy and fas
 ---
 
 Download this extension from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=K1tty.RockMargin#overview)
+
 See the [change log](CHANGELOG.md) for changes history.
 
 ---
