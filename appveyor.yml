@@ -1,0 +1,10 @@
+version: 0.0.{build}
+image:
+- Visual Studio 2017
+- Visual Studio 2015
+- Visual Studio 2013
+configuration: Release
+platform: Any CPU
+build:
+  project: RockMargin.sln
+  verbosity: minimal

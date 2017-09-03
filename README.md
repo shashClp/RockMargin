@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/kxjslttdyngh5hru?svg=true)](https://ci.appveyor.com/project/K1tty/rockmargin)
+
 # RockMargin
 
 In VS 2005/2008 days I've found the tool that makes code navigation easy and fast. It was named `RockScroll`. Year by year I used this tool every day and become addicted to it. But then came era of VS2010 and my world crashed into pieces because RockScroll was never ported to new versions of Visual Studio. I tried loads of possible replacemens but haven't found any that could make me as happy as I was in the days of RockScroll. So as usually happens with programmers I decided to write my own.
