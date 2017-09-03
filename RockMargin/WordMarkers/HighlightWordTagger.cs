@@ -50,6 +50,8 @@ namespace RockMargin
 			
 			view.Closed += OnViewClosed;
 			view.Options.OptionChanged += OnOptionChanged;
+
+			ReloadOptions();
 		}
 
 		private void ReloadOptions()
