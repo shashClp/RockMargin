@@ -6,9 +6,11 @@
 		<Description xml:space="preserve">Reincarnation of famous RockScroll extension for Visual Studio 2012/2013/2015/2017</Description>
 		<MoreInfo>https://github.com/K1tty/RockMargin</MoreInfo>
 		<License>Info\license.rtf</License>
+		<GettingStartedGuide>https://github.com/K1tty/RockMargin/blob/master/README.md</GettingStartedGuide>
 		<ReleaseNotes>https://github.com/K1tty/RockMargin/blob/master/CHANGELOG.md</ReleaseNotes>
 		<Icon>Info\icon.png</Icon>
 		<PreviewImage>Info\preview_image.png</PreviewImage>
+		<Tags>Navigation, ScrollBar, Text Editor, Highlight, Margin, RockScroll</Tags>
 	</Metadata>
 
 	<Installation>
