@@ -70,7 +70,9 @@ As result this extension works almost instantly on nowadays PC's with files up t
 ### Works On My Machine Disclaimer
 > This is released with exactly zero warranty or support. If it deletes files or kills your family pet, you have been warned. It might work great, and it might not. It hasn't been tested against the myriad of other VS Add-Ins, but it works well on my machine.
 
-<div style="text-align:center"><img src ="./RockMargin/Info/works_on_my_machine.png" /></div>
+<p align="center">
+  <img align="center" src="./RockMargin/Info/works_on_my_machine.png">
+</p>
 
 ---
 
