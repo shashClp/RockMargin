@@ -1,4 +1,4 @@
-- [ ] Disable copy-on-build behaviour for references
+- [x] Disable copy-on-build behaviour for references
 - [ ] Fix AppVeyor auto-builds
 - [ ] Support single VSIX for Visual Studio 2012/2013/2015/2017
 - [ ] RTF files auto-generation from markdown
