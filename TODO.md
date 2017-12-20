@@ -5,3 +5,4 @@
 - [ ] RTF files auto-generation from markdown
 - [ ] Remove custom telemetry solution
 - [ ] Investigate Google Analytics and Application Insights as telemetry solution
+- [ ] Sign extension
