@@ -1,9 +1,19 @@
-version: 0.0.{build}
+version: 1.4.0.{build}
+
 image:
-- Visual Studio 2017
+  - Visual Studio 2017
+
+before_build:
+  - nuget restore RockMargin.sln
+
 configuration: Release
 platform: Any CPU
+
 build:
   project: RockMargin.sln
   verbosity: minimal
+
 test: off
+
+artifacts:
+  - path: RockMargin\bin\Debug\RockMargin.vsix
