@@ -13,7 +13,5 @@ build:
   project: RockMargin.sln
   verbosity: minimal
 
-test: off
-
 artifacts:
   - path: RockMargin\bin\Debug\RockMargin.vsix
