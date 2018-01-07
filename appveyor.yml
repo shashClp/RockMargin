@@ -14,4 +14,4 @@ build:
   verbosity: minimal
 
 artifacts:
-  - path: RockMargin\bin\Debug\RockMargin.vsix
+  - path: RockMargin\bin\Release\RockMargin.vsix
