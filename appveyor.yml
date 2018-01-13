@@ -1,7 +1,7 @@
 image:
 - Visual Studio 2017
 
- install: 
+install:
 - cmd: nuget restore RockMargin.sln
 - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
 - ps: Vsix-IncrementVsixVersion -versionType revision
