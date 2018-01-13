@@ -22,4 +22,4 @@ build:
 
 artifacts:
 - path: RockMargin\bin\Release\RockMargin.vsix
-  name: RockMargin-v{version}.vsix
+  name: RockMargin-v${version}.vsix
