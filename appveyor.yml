@@ -20,6 +20,5 @@ build:
   project: RockMargin.sln
   verbosity: minimal
 
-artifacts:
-- path: RockMargin\bin\Release\RockMargin.vsix
-  name: RockMargin-v${version}.vsix
+after_build:
+- ps: Push-AppveyorArtifact RockMargin\bin\Release\RockMargin.vsix -FileName "RockMargin-v$(appveyor_build_version).zip"
