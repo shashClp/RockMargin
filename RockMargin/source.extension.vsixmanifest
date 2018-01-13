@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-	<Metadata>
-		<Identity Id="2fde119c-c777-469c-b39c-628d79ca8fd2" Version="1.4" Language="en-US" Publisher="Kitty" />
-		<DisplayName>RockMargin</DisplayName>
-		<Description xml:space="preserve">Reincarnation of famous RockScroll extension for Visual Studio 2012/2013/2015/2017</Description>
-		<MoreInfo>https://github.com/K1tty/RockMargin</MoreInfo>
-		<License>Info\license.rtf</License>
-		<GettingStartedGuide>https://github.com/K1tty/RockMargin/blob/master/README.md</GettingStartedGuide>
-		<ReleaseNotes>https://github.com/K1tty/RockMargin/blob/master/CHANGELOG.md</ReleaseNotes>
-		<Icon>Info\icon.png</Icon>
-		<PreviewImage>Info\preview_image.png</PreviewImage>
-		<Tags>Navigation, ScrollBar, Text Editor, Highlight, Margin, RockScroll</Tags>
-	</Metadata>
+    <Metadata>
+        <Identity Id="2fde119c-c777-469c-b39c-628d79ca8fd2" Version="1.4.0" Language="en-US" Publisher="Kitty" />
+        <DisplayName>RockMargin</DisplayName>
+        <Description xml:space="preserve">Reincarnation of famous RockScroll extension for Visual Studio 2012/2013/2015/2017</Description>
+        <MoreInfo>https://github.com/K1tty/RockMargin</MoreInfo>
+        <License>Info\license.rtf</License>
+        <GettingStartedGuide>https://github.com/K1tty/RockMargin/blob/master/README.md</GettingStartedGuide>
+        <ReleaseNotes>https://github.com/K1tty/RockMargin/blob/master/CHANGELOG.md</ReleaseNotes>
+        <Icon>Info\icon.png</Icon>
+        <PreviewImage>Info\preview_image.png</PreviewImage>
+        <Tags>Navigation, ScrollBar, Text Editor, Highlight, Margin, RockScroll</Tags>
+    </Metadata>
 
-	<Installation>
-		<InstallationTarget Version="[11.0, 16.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
-	</Installation>
+    <Installation>
+        <InstallationTarget Version="[11.0, 16.0)" Id="Microsoft.VisualStudio.IntegratedShell" />
+    </Installation>
 
-	<Prerequisites>
-		<Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[11.0,16.0)" DisplayName="Visual Studio core editor" />
-	</Prerequisites>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[11.0,16.0)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
 
-	<Assets>
-		<Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-		<Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="RockOptions" Path="|RockOptions;PkgdefProjectOutputGroup|" />
-	</Assets>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="RockOptions" Path="|RockOptions;PkgdefProjectOutputGroup|" />
+    </Assets>
 </PackageManifest>
