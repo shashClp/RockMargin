@@ -21,4 +21,4 @@ build:
   verbosity: minimal
 
 after_build:
-- ps: Push-AppveyorArtifact RockMargin\bin\Release\RockMargin.vsix -FileName "RockMargin-v$(appveyor_build_version).zip"
+- ps: Push-AppveyorArtifact RockMargin\bin\Release\RockMargin.vsix -FileName "RockMargin-v$($env:APPVEYOR_BUILD_VERSION).vsix"
