@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="2fde119c-c777-469c-b39c-628d79ca8fd2" Version="1.4.0" Language="en-US" Publisher="Kitty" />
         <DisplayName>RockMargin</DisplayName>
-        <Description xml:space="preserve">Reincarnation of famous RockScroll extension for Visual Studio 2012/2013/2015/2017</Description>
+        <Description xml:space="preserve">Reincarnation of famous RockScroll extension for Visual Studio 2012-2017</Description>
         <MoreInfo>https://github.com/K1tty/RockMargin</MoreInfo>
         <License>Info\license.rtf</License>
         <GettingStartedGuide>https://github.com/K1tty/RockMargin/blob/master/README.md</GettingStartedGuide>
