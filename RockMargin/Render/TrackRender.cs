@@ -7,8 +7,6 @@ using System.Globalization;
 using System.Windows.Media.Imaging;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Collections;
-using Microsoft.VisualStudio.Text.Classification;
 using System.Threading;
 using System.Windows.Threading;
 
