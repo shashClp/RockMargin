@@ -4,8 +4,7 @@ image:
 install:
 - cmd: nuget restore RockMargin.sln
 - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
-- ps: Vsix-IncrementVsixVersion -versionType revision
-- ps: Vsix-UpdateBuildVersion
+- ps: Vsix-IncrementVsixVersion -versionType revision | Vsix-UpdateBuildVersion
 
 assembly_info:
   patch: true
