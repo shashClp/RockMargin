@@ -1,7 +1,7 @@
 - [x] Disable copy-on-build behaviour for references
 - [x] Fix AppVeyor auto-builds
 - [x] Support single VSIX for Visual Studio 2012/2013/2015/2017
-- [ ] Patch AssemblyInfo file versions by AppVeyor
+- [x] Patch AssemblyInfo file versions by AppVeyor
 - [ ] Configure AppVeyor to push GitHub Release on 'release' tags
 - [ ] Confugure VSIX signing
 - [ ] RTF files auto-generation from markdown (or markdown is ok with latest Marketplace update?)
