@@ -6,6 +6,5 @@
 - [ ] Configure AppVeyor to push GitHub Release on 'release' tags
 - [ ] Confugure VSIX signing
 - [ ] RTF files auto-generation from markdown (or markdown is ok with latest Marketplace update?)
-- [ ] Add functional testing to run in AppVeyor
 - [ ] Remove custom telemetry solution
 - [ ] Investigate Google Analytics and Application Insights as telemetry solution
