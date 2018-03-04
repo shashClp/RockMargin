@@ -9,7 +9,7 @@ These are changes to each version that has been released on the official [Visual
 - Enhanced text rendering option
 
 #### 1.2.0 (Sep 19, 2013)
-- Enabled VS2013) support
+- Enabled VS2013 support
 
 #### 1.2.0 (Sep 17, 2013)
 - Added change margin
