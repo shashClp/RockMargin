@@ -2,9 +2,10 @@
 - [x] Fix AppVeyor auto-builds
 - [x] Support single VSIX for Visual Studio 2012/2013/2015/2017
 - [x] Patch AssemblyInfo file versions by AppVeyor
-- [ ] Establish new versioning scheme
+- [x] Establish new versioning scheme
 - [ ] Configure AppVeyor to push GitHub Release on 'release' tags
 - [ ] Confugure VSIX signing
 - [ ] RTF files auto-generation from markdown (or markdown is ok with latest Marketplace update?)
+- [ ] Upload latest RockMargin build to VS Marketplace
 - [ ] Remove custom telemetry solution
 - [ ] Investigate Google Analytics and Application Insights as telemetry solution
