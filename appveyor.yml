@@ -3,8 +3,7 @@ image:
 
 install:
 - cmd: nuget restore RockMargin.sln
-- ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
-- ps: BuildScripts\Get-Version | Vsix-UpdateBuildVersion
+- ps: .\BuildScripts\get_version.ps1 | .\BuildScripts\update_vsix_version.ps1 | .\BuildScripts\update_build_version.ps1
 
 assembly_info:
   patch: true
