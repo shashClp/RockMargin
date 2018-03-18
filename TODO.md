@@ -4,7 +4,6 @@
 - [x] Patch AssemblyInfo file versions by AppVeyor
 - [x] Establish new versioning scheme
 - [x] Configure AppVeyor to publish GitHub Release draft
-- [ ] Configure VSIX signing
 - [ ] Upload latest RockMargin build to VS Marketplace
 - [ ] Remove custom telemetry solution
 - [ ] Investigate Google Analytics and Application Insights as telemetry solution
