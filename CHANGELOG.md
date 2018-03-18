@@ -1,6 +1,13 @@
 # Changelog
 
-These are changes to each version that has been released on the official [Visual Studio extensions gallery](https://marketplace.visualstudio.com/).
+These are changes to each version that has been released on the official [Visual Studio Marketplace](https://marketplace.visualstudio.com/).
+
+#### 2018.3.15 (Mar 19, 2018)
+- Added support for Visual Studio 2015/2017
+- Dropped support for Visual Studio 2010
+- New versioning scheme
+- Fixed 'Highlight foreground' options saving
+- All links now point to the official GitHub repository
 
 #### 1.3.1 (Oct 13, 2013)
 - Fixed saving/loading of Alt + Double Click option
