@@ -2,7 +2,7 @@
 
 These are changes to each version that has been released on the official [Visual Studio Marketplace](https://marketplace.visualstudio.com/).
 
-#### 2018.3.15 (Mar 19, 2018)
+#### 2018.3.16 (Mar 19, 2018)
 - Added support for Visual Studio 2015/2017
 - Dropped support for Visual Studio 2010
 - New versioning scheme
