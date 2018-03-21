@@ -10,8 +10,8 @@ namespace RockMargin
 {
 	public class SettingsStore
 	{
-		IEditorOptions _options;
-		IVsWritableSettingsStore _store;
+		private IEditorOptions _options;
+		private IVsWritableSettingsStore _store;
 
 		public SettingsStore(IVsSettingsManager manager, IEditorOptions options)
 		{
@@ -110,8 +110,7 @@ namespace RockMargin
 
 		private void EnsureCollectionExists(string collection)
 		{
-			int ivalue = 0;
-			_store.CollectionExists(collection, out ivalue);
+			_store.CollectionExists(collection, out int ivalue);
 
 			if (ivalue == 0)
 				_store.CreateCollection(collection);

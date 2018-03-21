@@ -10,14 +10,13 @@ namespace RockMargin
 	class RockMargin: Canvas, IWpfTextViewMargin
 	{
 		public const string MarginName = "RockMargin";
-
-		IWpfTextView _view;
-		MarksEnumerator _marks;
-		ChangeEnumerator _changes;
-		HighlightedWordsEnumerator _highlights;
-		HighlightWordTagger _tagger;
-		Track _track;
-		TrackRender _render;
+		private IWpfTextView _view;
+		private MarksEnumerator _marks;
+		private ChangeEnumerator _changes;
+		private HighlightedWordsEnumerator _highlights;
+		private HighlightWordTagger _tagger;
+		private Track _track;
+		private TrackRender _render;
 
 
 		public RockMargin(

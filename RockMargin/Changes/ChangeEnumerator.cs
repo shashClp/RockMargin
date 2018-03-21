@@ -18,12 +18,8 @@ namespace RockMargin
 
 		private ITextView _view;
 		private ITagAggregator<ChangeTag> _aggregator;
-		private List<Change> _changes = new List<Change>();
 
-		public List<Change> Changes
-		{
-			get { return _changes; }
-		}
+		public List<Change> Changes { get; } = new List<Change>();
 
 		public event EventHandler<EventArgs> ChangesChanged;
 
@@ -37,7 +33,7 @@ namespace RockMargin
 			_aggregator.BatchedTagsChanged += OnTagsChanged;
 		}
 
-		void OnViewClosed(object sender, EventArgs e)
+		private void OnViewClosed(object sender, EventArgs e)
 		{
 			_aggregator.BatchedTagsChanged -= OnTagsChanged;
 		}
@@ -49,7 +45,7 @@ namespace RockMargin
 
 		public void UpdateChanges()
 		{
-			_changes.Clear();
+			Changes.Clear();
 
 			var snapshot = _view.VisualSnapshot;
 			var span = new SnapshotSpan(snapshot, 0, snapshot.Length);
@@ -61,16 +57,17 @@ namespace RockMargin
 				SnapshotPoint? end_pos = tag.Span.End.GetPoint(buffer, PositionAffinity.Predecessor);
 				if (start_pos.HasValue && end_pos.HasValue)
 				{
-					var change = new Change();
-					change.start_line = buffer.CurrentSnapshot.GetLineNumberFromPosition(start_pos.Value.Position);
-					change.end_line = buffer.CurrentSnapshot.GetLineNumberFromPosition(end_pos.Value.Position);
-					change.saved = !tag.Tag.ChangeTypes.HasFlag(ChangeTypes.ChangedSinceSaved);
-					_changes.Add(change);
+					var change = new Change
+					{
+						start_line = buffer.CurrentSnapshot.GetLineNumberFromPosition(start_pos.Value.Position),
+						end_line = buffer.CurrentSnapshot.GetLineNumberFromPosition(end_pos.Value.Position),
+						saved = !tag.Tag.ChangeTypes.HasFlag(ChangeTypes.ChangedSinceSaved)
+					};
+					Changes.Add(change);
 				}
 			}
 
-			if (ChangesChanged != null)
-				ChangesChanged(this, EventArgs.Empty);
+			ChangesChanged?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

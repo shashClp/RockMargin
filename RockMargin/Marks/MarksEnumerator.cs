@@ -33,9 +33,11 @@ namespace RockMargin
 					SnapshotPoint? pos = tag.Span.Start.GetPoint(buffer, PositionAffinity.Successor);
 					if (pos.HasValue)
 					{
-						var text_mark = new TextMark();
-						text_mark.line = buffer.CurrentSnapshot.GetLineNumberFromPosition(pos.Value.Position);
-						text_mark.brush = ColorExtractor.GetBrushFromIndex(background[0]);
+						var text_mark = new TextMark
+						{
+							line = buffer.CurrentSnapshot.GetLineNumberFromPosition(pos.Value.Position),
+							brush = ColorExtractor.GetBrushFromIndex(background[0])
+						};
 						return text_mark;
 					}
 				}
@@ -47,14 +49,10 @@ namespace RockMargin
 
 	class MarksEnumerator
 	{
-		ITagAggregator<IVsVisibleTextMarkerTag> _aggregator = null;
-		ITextView _view;
-		List<TextMark> _marks = new List<TextMark>();
+		private ITagAggregator<IVsVisibleTextMarkerTag> _aggregator = null;
+		private ITextView _view;
 
-		public List<TextMark> Marks
-		{
-			get { return _marks; }
-		}
+		public List<TextMark> Marks { get; } = new List<TextMark>();
 
 		public event EventHandler<EventArgs> MarksChanged;
 
@@ -80,7 +78,7 @@ namespace RockMargin
 
 		public void UpdateMarks()
 		{
-			_marks.Clear();
+			Marks.Clear();
 
 			var snapshot = _view.VisualSnapshot;
 			var span = new SnapshotSpan(snapshot, 0, snapshot.Length);
@@ -88,11 +86,10 @@ namespace RockMargin
 			{
 				var mark = TextMark.Create(tag);
 				if (mark != null)
-					_marks.Add(mark);
+					Marks.Add(mark);
 			}
 
-			if (MarksChanged != null)
-				MarksChanged(this, EventArgs.Empty);
+			MarksChanged?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }
