@@ -23,5 +23,9 @@ namespace RockMargin
 		public static readonly EditorOptionKey<bool> ChangeMarginEnabled = new EditorOptionKey<bool>("RockMargin/ChangeMarginEnabled");
 		public static readonly EditorOptionKey<uint> SavedChangeColor = new EditorOptionKey<uint>("RockMargin/SavedChangeColor");
 		public static readonly EditorOptionKey<uint> UnsavedChangeColor = new EditorOptionKey<uint>("RockMargin/UnsavedChangeColor");
+
+		public static readonly EditorOptionKey<uint> BookmarkMarkColor = new EditorOptionKey<uint>("RockMargin/BookmarkMarkColor");
+		public static readonly EditorOptionKey<uint> BreakpointMarkColor = new EditorOptionKey<uint>("RockMargin/BreakpointMarkColor");
+		public static readonly EditorOptionKey<uint> TracepointMarkColor = new EditorOptionKey<uint>("RockMargin/TracepointMarkColor");
 	}
 }

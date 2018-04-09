@@ -114,4 +114,25 @@ namespace RockMargin
 		public override bool Default { get { return true; } }
 		public override EditorOptionKey<bool> Key { get { return OptionsKeys.EnhancedTextRendering; } }
 	}
+
+	[Export(typeof(EditorOptionDefinition))]
+	public sealed class BookmarkMarkColorOption : ViewOptionDefinition<uint>
+	{
+		public override uint Default { get { return 0xff00ffff; } }
+		public override EditorOptionKey<uint> Key { get { return OptionsKeys.BookmarkMarkColor; } }
+	}
+
+	[Export(typeof(EditorOptionDefinition))]
+	public sealed class BreakpointMarkColorOption : ViewOptionDefinition<uint>
+	{
+		public override uint Default { get { return 0xff800000; } }
+		public override EditorOptionKey<uint> Key { get { return OptionsKeys.BreakpointMarkColor; } }
+	}
+
+	[Export(typeof(EditorOptionDefinition))]
+	public sealed class TracepointMarkColorOption : ViewOptionDefinition<uint>
+	{
+		public override uint Default { get { return 0xfff08080; } }
+		public override EditorOptionKey<uint> Key { get { return OptionsKeys.TracepointMarkColor; } }
+	}
 }

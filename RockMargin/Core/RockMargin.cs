@@ -81,7 +81,7 @@ namespace RockMargin
 
 				_render.Invalidate(TrackRender.MarginParts.WordHighlights);
 			}
-			else if (e.OptionId == OptionsKeys.MarginColor.Name)
+			else if (e.OptionId == OptionsKeys.MarginColor.Name || e.OptionId == OptionsKeys.BookmarkMarkColor.Name || e.OptionId == OptionsKeys.BreakpointMarkColor.Name || e.OptionId == OptionsKeys.TracepointMarkColor.Name)
 			{
 				_render.ReloadOptions();
 				_render.Invalidate(TrackRender.MarginParts.Marks);

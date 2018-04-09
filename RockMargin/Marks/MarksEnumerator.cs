@@ -13,37 +13,56 @@ namespace RockMargin
 {
 	class TextMark
 	{
+		public enum MarkType
+		{
+			Unknown,
+			Bookmark,
+			Breakpoint,
+			Tracepoint
+		}
+
 		public int line;
-		public Brush brush;
+		public MarkType type;
+
+		private static MarkType GetMarkType(int tag_type)
+		{
+			switch (tag_type)
+			{
+				case 45: // Breakpoint - Advanced (Disabled)
+				case 46: // Breakpoint - Advanced (Enabled)
+				case 69: // Breakpoint (Disabled)
+				case 84: // Breakpoint (Enabled)
+					return MarkType.Breakpoint;
+
+				case 41: // Tracepoint (Disabled)
+				case 49: // Tracepoint - Advanced (Disabled)
+				case 52: // Tracepoint (Enabled)
+				case 94: // Tracepoint - Advanced (Enabled)
+					return MarkType.Tracepoint;
+
+				case 3: // Bookmark
+					return MarkType.Bookmark;
+			}
+
+			return MarkType.Unknown;
+		}
 
 		public static TextMark Create(IMappingTagSpan<IVsVisibleTextMarkerTag> tag)
 		{
-			uint flags;
-			int hr = tag.Tag.StreamMarker.GetVisualStyle(out flags);
-			if (ErrorHandler.Succeeded(hr) &&
-					((flags & (uint)MARKERVISUAL.MV_GLYPH) != 0) &&
-					((flags & ((uint)MARKERVISUAL.MV_COLOR_ALWAYS | (uint)MARKERVISUAL.MV_COLOR_LINE_IF_NO_MARGIN)) != 0))
-			{
-				COLORINDEX[] foreground = new COLORINDEX[1];
-				COLORINDEX[] background = new COLORINDEX[1];
-				hr = tag.Tag.MarkerType.GetDefaultColors(foreground, background);
-				if (ErrorHandler.Succeeded(hr))
-				{
-					ITextBuffer buffer = tag.Span.BufferGraph.TopBuffer;
-					SnapshotPoint? pos = tag.Span.Start.GetPoint(buffer, PositionAffinity.Successor);
-					if (pos.HasValue)
-					{
-						var text_mark = new TextMark
-						{
-							line = buffer.CurrentSnapshot.GetLineNumberFromPosition(pos.Value.Position),
-							brush = ColorExtractor.GetBrushFromIndex(background[0])
-						};
-						return text_mark;
-					}
-				}
-			}
+			MarkType mark_type = GetMarkType(tag.Tag.Type);
+			if (mark_type == MarkType.Unknown)
+				return null;
 
-			return null;
+			ITextBuffer buffer = tag.Span.BufferGraph.TopBuffer;
+			SnapshotPoint? pos = tag.Span.Start.GetPoint(buffer, PositionAffinity.Successor);
+			if (!pos.HasValue)
+				return null;
+
+			return new TextMark()
+			{
+				line = buffer.CurrentSnapshot.GetLineNumberFromPosition(pos.Value.Position),
+				type = mark_type
+			};
 		}
 	}
 

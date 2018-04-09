@@ -37,6 +37,9 @@ namespace RockMargin
 		private Brush HighlightBrush;
 		private Brush SavedChangesBrush;
 		private Brush UnsavedChangesBrush;
+		private Brush BookmarkMarkBrush;
+		private Brush BreakpointMarkBrush;
+		private Brush TracepointMarkBrush;
 		private uint TextColor;
 		private uint CommentsColor;
 		private uint BackgroundColor;
@@ -156,6 +159,9 @@ namespace RockMargin
 			BackgroundColor = _view.Options.GetOptionValue(OptionsKeys.BackgroundColor);
 			SavedChangesBrush = Utils.CreateBrush(_view.Options.GetOptionValue(OptionsKeys.SavedChangeColor));
 			UnsavedChangesBrush = Utils.CreateBrush(_view.Options.GetOptionValue(OptionsKeys.UnsavedChangeColor));
+			BookmarkMarkBrush = Utils.CreateBrush(_view.Options.GetOptionValue(OptionsKeys.BookmarkMarkColor));
+			BreakpointMarkBrush = Utils.CreateBrush(_view.Options.GetOptionValue(OptionsKeys.BreakpointMarkColor));
+			TracepointMarkBrush = Utils.CreateBrush(_view.Options.GetOptionValue(OptionsKeys.TracepointMarkColor));
 		}
 
 		private void InitDrawingObjects()
@@ -264,7 +270,24 @@ namespace RockMargin
 			Rect rect = new Rect(1, y, 1, 1);
 			rect.Inflate(1.0, 1.0);
 
-			DrawRectangle(dc, mark.brush, rect);
+			Brush brush = Brushes.Transparent;
+
+			switch (mark.type)
+			{
+				case TextMark.MarkType.Bookmark:
+					brush = BookmarkMarkBrush;
+					break;
+
+				case TextMark.MarkType.Breakpoint:
+					brush = BreakpointMarkBrush;
+					break;
+
+				case TextMark.MarkType.Tracepoint:
+					brush = TracepointMarkBrush;
+					break;
+			}
+
+			DrawRectangle(dc, brush, rect);
 		}
 
 		private void DrawRectangle(DrawingContext dc, Brush brush, Rect rect)
