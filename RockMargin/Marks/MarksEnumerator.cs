@@ -24,32 +24,25 @@ namespace RockMargin
 		public int line;
 		public MarkType type;
 
-		private static MarkType GetMarkType(int tag_type)
+		private static MarkType GetMarkType(IVsVisibleTextMarkerTag tag)
 		{
-			switch (tag_type)
-			{
-				case 45: // Breakpoint - Advanced (Disabled)
-				case 46: // Breakpoint - Advanced (Enabled)
-				case 69: // Breakpoint (Disabled)
-				case 84: // Breakpoint (Enabled)
-					return MarkType.Breakpoint;
+			tag.MarkerType.GetDisplayName(out string name);
 
-				case 41: // Tracepoint (Disabled)
-				case 49: // Tracepoint - Advanced (Disabled)
-				case 52: // Tracepoint (Enabled)
-				case 94: // Tracepoint - Advanced (Enabled)
-					return MarkType.Tracepoint;
+			if (name.StartsWith("Breakpoint"))
+				return MarkType.Breakpoint;
 
-				case 3: // Bookmark
-					return MarkType.Bookmark;
-			}
+			if (name.StartsWith("Tracepoint"))
+				return MarkType.Tracepoint;
+
+			if (name.StartsWith("Bookmark"))
+				return MarkType.Bookmark;
 
 			return MarkType.Unknown;
 		}
 
 		public static TextMark Create(IMappingTagSpan<IVsVisibleTextMarkerTag> tag)
 		{
-			MarkType mark_type = GetMarkType(tag.Tag.Type);
+			MarkType mark_type = GetMarkType(tag.Tag);
 			if (mark_type == MarkType.Unknown)
 				return null;
 
