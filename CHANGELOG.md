@@ -2,6 +2,10 @@
 
 These are changes to each version that has been released on the official [Visual Studio Marketplace](https://marketplace.visualstudio.com/).
 
+#### 2018.4.4 (Apr 30, 2018)
+- Fixed Breakpoints marks in VS 2012-2015
+- Added options for Bookmarks, Breakpoints and Tracepoints marks colors
+
 #### 2018.3.16 (Mar 19, 2018)
 - Added support for Visual Studio 2015/2017
 - Dropped support for Visual Studio 2010
