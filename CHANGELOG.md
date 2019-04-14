@@ -2,7 +2,7 @@
 
 These are changes to each version that has been released on the official [Visual Studio Marketplace](https://marketplace.visualstudio.com/).
 
-#### 2019.4.2 (Apr 14, 2019)
+#### 2019.4.3 (Apr 14, 2019)
 - Enabled VS2019 support
 
 #### 2018.4.4 (Apr 30, 2018)
