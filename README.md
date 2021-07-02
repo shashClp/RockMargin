@@ -1,4 +1,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/kxjslttdyngh5hru?svg=true)](https://ci.appveyor.com/project/K1tty/rockmargin)
+[![Marketplace Version](https://vsmarketplacebadge.apphb.com/version-short/K1tty.RockMargin.svg)](https://marketplace.visualstudio.com/items?itemName=K1tty.RockMargin)
+[![Downloads](https://vsmarketplacebadge.apphb.com/downloads/K1tty.RockMargin.svg)](https://marketplace.visualstudio.com/items?itemName=K1tty.RockMargin)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/K1tty.RockMargin.svg)](https://marketplace.visualstudio.com/items?itemName=K1tty.RockMargin)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating/K1tty.RockMargin.svg)](https://marketplace.visualstudio.com/items?itemName=K1tty.RockMargin)
 
 # RockMargin
 
