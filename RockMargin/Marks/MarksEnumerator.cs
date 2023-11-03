@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Text.Editor;
@@ -15,48 +13,58 @@ namespace RockMargin
 {
 	class TextMark
 	{
+		public enum MarkType
+		{
+			Unknown,
+			Bookmark,
+			Breakpoint,
+			Tracepoint
+		}
+
 		public int line;
-		public Brush brush;
+		public MarkType type;
+
+		private static MarkType GetMarkType(IVsVisibleTextMarkerTag tag)
+		{
+			tag.MarkerType.GetDisplayName(out string name);
+
+			if (name.StartsWith("Breakpoint"))
+				return MarkType.Breakpoint;
+
+			if (name.StartsWith("Tracepoint"))
+				return MarkType.Tracepoint;
+
+			if (name.StartsWith("Bookmark"))
+				return MarkType.Bookmark;
+
+			return MarkType.Unknown;
+		}
 
 		public static TextMark Create(IMappingTagSpan<IVsVisibleTextMarkerTag> tag)
 		{
-			uint flags;
-			int hr = tag.Tag.StreamMarker.GetVisualStyle(out flags);
-			if (ErrorHandler.Succeeded(hr) &&
-					((flags & (uint)MARKERVISUAL.MV_GLYPH) != 0) &&
-					((flags & ((uint)MARKERVISUAL.MV_COLOR_ALWAYS | (uint)MARKERVISUAL.MV_COLOR_LINE_IF_NO_MARGIN)) != 0))
-			{
-				COLORINDEX[] foreground = new COLORINDEX[1];
-				COLORINDEX[] background = new COLORINDEX[1];
-				hr = tag.Tag.MarkerType.GetDefaultColors(foreground, background);
-				if (ErrorHandler.Succeeded(hr))
-				{
-					ITextBuffer buffer = tag.Span.BufferGraph.TopBuffer;
-					SnapshotPoint? pos = tag.Span.Start.GetPoint(buffer, PositionAffinity.Successor);
-					if (pos.HasValue)
-					{
-						var text_mark = new TextMark();
-						text_mark.line = buffer.CurrentSnapshot.GetLineNumberFromPosition(pos.Value.Position);
-						text_mark.brush = ColorExtractor.GetBrushFromIndex(background[0]);
-						return text_mark;
-					}
-				}
-			}
+			MarkType mark_type = GetMarkType(tag.Tag);
+			if (mark_type == MarkType.Unknown)
+				return null;
 
-			return null;
+			ITextBuffer buffer = tag.Span.BufferGraph.TopBuffer;
+			SnapshotPoint? pos = tag.Span.Start.GetPoint(buffer, PositionAffinity.Successor);
+			if (!pos.HasValue)
+				return null;
+
+			return new TextMark()
+			{
+				line = buffer.CurrentSnapshot.GetLineNumberFromPosition(pos.Value.Position),
+				type = mark_type
+			};
 		}
 	}
 
 	class MarksEnumerator
 	{
-		ITagAggregator<IVsVisibleTextMarkerTag> _aggregator = null;
-		ITextView _view;
-		List<TextMark> _marks = new List<TextMark>();
+		private ITagAggregator<IVsVisibleTextMarkerTag> _aggregator = null;
+		private ITextView _view;
 
-		public List<TextMark> Marks
-		{
-			get { return _marks; }
-		}
+		public List<TextMark> Marks { get; } = new List<TextMark>();
 
 		public event EventHandler<EventArgs> MarksChanged;
 
@@ -82,7 +90,7 @@ namespace RockMargin
 
 		public void UpdateMarks()
 		{
-			_marks.Clear();
+			Marks.Clear();
 
 			var snapshot = _view.VisualSnapshot;
 			var span = new SnapshotSpan(snapshot, 0, snapshot.Length);
@@ -90,11 +98,10 @@ namespace RockMargin
 			{
 				var mark = TextMark.Create(tag);
 				if (mark != null)
-					_marks.Add(mark);
+					Marks.Add(mark);
 			}
 
-			if (MarksChanged != null)
-				MarksChanged(this, EventArgs.Empty);
+			MarksChanged?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

@@ -4,25 +4,19 @@ using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Editor;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
-using System.ComponentModel.Composition;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Text.Classification;
 
 namespace RockMargin
 {
 	class RockMargin: Canvas, IWpfTextViewMargin
 	{
 		public const string MarginName = "RockMargin";
-
-		IWpfTextView _view;
-		MarksEnumerator _marks;
-		ChangeEnumerator _changes;
-		HighlightedWordsEnumerator _highlights;
-		HighlightWordTagger _tagger;
-		Track _track;
-		TrackRender _render;
+		private IWpfTextView _view;
+		private MarksEnumerator _marks;
+		private ChangeEnumerator _changes;
+		private HighlightedWordsEnumerator _highlights;
+		private HighlightWordTagger _tagger;
+		private Track _track;
+		private TrackRender _render;
 
 
 		public RockMargin(
@@ -87,7 +81,7 @@ namespace RockMargin
 
 				_render.Invalidate(TrackRender.MarginParts.WordHighlights);
 			}
-			else if (e.OptionId == OptionsKeys.MarginColor.Name)
+			else if (e.OptionId == OptionsKeys.MarginColor.Name || e.OptionId == OptionsKeys.BookmarkMarkColor.Name || e.OptionId == OptionsKeys.BreakpointMarkColor.Name || e.OptionId == OptionsKeys.TracepointMarkColor.Name)
 			{
 				_render.ReloadOptions();
 				_render.Invalidate(TrackRender.MarginParts.Marks);

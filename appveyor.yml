@@ -1,0 +1,23 @@
+image:
+- Visual Studio 2017
+
+install:
+- cmd: nuget restore RockMargin.sln
+- ps: .\BuildScripts\get_version.ps1 | .\BuildScripts\update_vsix_version.ps1 | .\BuildScripts\update_build_version.ps1
+
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+
+configuration: Release
+platform: Any CPU
+
+build:
+  project: RockMargin.sln
+  verbosity: minimal
+
+after_build:
+- ps: Push-AppveyorArtifact RockMargin\bin\Release\RockMargin.vsix -FileName "RockMargin-v$($env:APPVEYOR_BUILD_VERSION).vsix"

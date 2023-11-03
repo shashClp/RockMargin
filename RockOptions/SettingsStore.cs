@@ -1,4 +1,8 @@
-﻿using Microsoft.VisualStudio;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor;
 
@@ -6,8 +10,8 @@ namespace RockMargin
 {
 	public class SettingsStore
 	{
-		IEditorOptions _options;
-		IVsWritableSettingsStore _store;
+		private IEditorOptions _options;
+		private IVsWritableSettingsStore _store;
 
 		public SettingsStore(IVsSettingsManager manager, IEditorOptions options)
 		{
@@ -15,44 +19,47 @@ namespace RockMargin
 			manager.GetWritableSettingsStore((uint)__VsSettingsScope.SettingsScope_UserSettings, out _store);
 		}
 
+		public IEnumerable<object> GetOptionsKeys()
+		{
+			return typeof(OptionsKeys).GetFields(BindingFlags.Public | BindingFlags.Static).Select(field => field.GetValue(typeof(OptionsKeys)));
+		}
+
 		public void Load()
 		{
-			LoadOption(OptionsKeys.Width);
-			LoadOption(OptionsKeys.AltHighlights);
-			LoadOption(OptionsKeys.HighlightsEnabled);
-			LoadOption(OptionsKeys.MarginColor);
-			LoadOption(OptionsKeys.ScrollColor);
-			LoadOption(OptionsKeys.ThumbColor);
-			LoadOption(OptionsKeys.HighlightColor);
-			LoadOption(OptionsKeys.TextColor);
-			LoadOption(OptionsKeys.CommentsColor);
-			LoadOption(OptionsKeys.BackgroundColor);
-			LoadOption(OptionsKeys.TextMarkerBackgroundColor);
-			LoadOption(OptionsKeys.TextMarkerForegroundColor);
-			LoadOption(OptionsKeys.ChangeMarginEnabled);
-			LoadOption(OptionsKeys.SavedChangeColor);
-			LoadOption(OptionsKeys.UnsavedChangeColor);
-			LoadOption(OptionsKeys.EnhancedTextRendering);
+			foreach (object key in GetOptionsKeys())
+			{
+				if (key is EditorOptionKey<bool>)
+				{
+					LoadOption((EditorOptionKey<bool>)key);
+				}
+				else if (key is EditorOptionKey<uint>)
+				{
+					LoadOption((EditorOptionKey<uint>)key);
+				}
+				else
+				{
+					throw new NotImplementedException();
+				}
+			}
 		}
 
 		public void Save()
 		{
-			SaveOption(OptionsKeys.Width);
-			SaveOption(OptionsKeys.AltHighlights);
-			SaveOption(OptionsKeys.HighlightsEnabled);
-			SaveOption(OptionsKeys.MarginColor);
-			SaveOption(OptionsKeys.ScrollColor);
-			SaveOption(OptionsKeys.ThumbColor);
-			SaveOption(OptionsKeys.HighlightColor);
-			SaveOption(OptionsKeys.TextColor);
-			SaveOption(OptionsKeys.CommentsColor);
-			SaveOption(OptionsKeys.BackgroundColor);
-			SaveOption(OptionsKeys.TextMarkerBackgroundColor);
-			SaveOption(OptionsKeys.TextMarkerForegroundColor);
-			SaveOption(OptionsKeys.ChangeMarginEnabled);
-			SaveOption(OptionsKeys.SavedChangeColor);
-			SaveOption(OptionsKeys.UnsavedChangeColor);
-			SaveOption(OptionsKeys.EnhancedTextRendering);
+			foreach (object key in GetOptionsKeys())
+			{
+				if (key is EditorOptionKey<bool>)
+				{
+					SaveOption((EditorOptionKey<bool>)key);
+				}
+				else if (key is EditorOptionKey<uint>)
+				{
+					SaveOption((EditorOptionKey<uint>)key);
+				}
+				else
+				{
+					throw new NotImplementedException();
+				}
+			}
 		}
 
 		private string GetCollectionName(string name)
@@ -103,8 +110,7 @@ namespace RockMargin
 
 		private void EnsureCollectionExists(string collection)
 		{
-			int ivalue = 0;
-			_store.CollectionExists(collection, out ivalue);
+			_store.CollectionExists(collection, out int ivalue);
 
 			if (ivalue == 0)
 				_store.CreateCollection(collection);

@@ -1,0 +1,9 @@
+- [x] Disable copy-on-build behaviour for references
+- [x] Fix AppVeyor auto-builds
+- [x] Support single VSIX for Visual Studio 2012/2013/2015/2017
+- [x] Patch AssemblyInfo file versions by AppVeyor
+- [x] Establish new versioning scheme
+- [x] Configure AppVeyor to publish GitHub Release draft
+- [x] Upload latest RockMargin build to VS Marketplace
+- [ ] Remove custom telemetry solution
+- [ ] Investigate Google Analytics and Application Insights as telemetry solution
